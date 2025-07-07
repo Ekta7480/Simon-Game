@@ -150,13 +150,21 @@ function playSound(color) {
         red: 440.00     // A4 - Higher pitch for the different block
     };
     
+    const frequencyValue = frequencies[color];
+    
+    // Check if frequency value is valid and finite
+    if (!frequencyValue || !isFinite(frequencyValue)) {
+        console.warn(`Invalid frequency for color: ${color}`);
+        return;
+    }
+    
     const oscillator = audioContext.createOscillator();
     const gainNode = audioContext.createGain();
     
     oscillator.connect(gainNode);
     gainNode.connect(audioContext.destination);
     
-    oscillator.frequency.value = frequencies[color];
+    oscillator.frequency.value = frequencyValue;
     oscillator.type = 'sine';
     
     gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
