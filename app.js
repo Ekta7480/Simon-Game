@@ -5,8 +5,9 @@ let started = false;
 let level = 0;
 let highScore = localStorage.getItem('simonHighScore') || 0;
 
-let btns = ["red", "purple", "green", "yellow"];
-let differentBlock = "yellow"; // The block that's different from the others
+// Three blocks are blue, one block is red (the different one)
+let btns = ["blue1", "blue2", "blue3", "red"];
+let differentBlock = "red"; // The block that's different from the others
 
 let h2 = document.querySelector("h2");
 let h3 = document.querySelector("h3");
@@ -22,15 +23,26 @@ document.addEventListener("keypress", function() {
     }
 });
 
+// Add click to start functionality
+document.querySelector(".start-btn").addEventListener("click", function() {
+    if (started == false) {
+        console.log("game is started");
+        started = true;
+        levelUp();
+    }
+});
+
 function gameFlash(btn) {
     btn.classList.add("flash");
+    playSound(btn.id);
     setTimeout(function() {
         btn.classList.remove("flash");
-    }, 250);
+    }, 400);
 }
 
 function userFlash(btn) {
     btn.classList.add("userflash");
+    playSound(btn.id);
     setTimeout(function() {
         btn.classList.remove("userflash");
     }, 250);
@@ -39,28 +51,43 @@ function userFlash(btn) {
 function levelUp() {
     userseq = []; // Reset user sequence for new level
     level++;
-    h2.innerText = `Level ${level}`;
+    h2.innerText = `Level ${level} - Watch the pattern!`;
 
-    // Fixed: Random index should be 0-3 (4 colors), not 0-2
+    // Random index should be 0-3 (4 blocks)
     let randIdx = Math.floor(Math.random() * 4);
     let randColor = btns[randIdx];
     let randbtn = document.querySelector(`.${randColor}`);
     gameseq.push(randColor);
-    console.log(gameseq);
+    console.log("Game sequence:", gameseq);
     
-    // Add delay before showing the sequence
+    // Show the entire sequence with delays
+    showSequence();
+}
+
+function showSequence() {
+    h2.innerText = `Level ${level} - Watch carefully!`;
+    
+    gameseq.forEach((color, index) => {
+        setTimeout(() => {
+            let btn = document.querySelector(`.${color}`);
+            gameFlash(btn);
+        }, (index + 1) * 800); // 800ms delay between each flash
+    });
+    
+    // After showing sequence, prompt user to repeat
     setTimeout(() => {
-        gameFlash(randbtn);
-    }, 600);
+        h2.innerText = `Level ${level} - Your turn! Repeat the pattern`;
+    }, (gameseq.length + 1) * 800);
 }
 
 function checkAns(idx) {
     if (userseq[idx] === gameseq[idx]) {
         if (userseq.length == gameseq.length) {
+            h2.innerText = `Level ${level} - Correct! Get ready for next level...`;
             // Add delay before next level
             setTimeout(() => {
                 levelUp();
-            }, 1000);
+            }, 1500);
         }
     } else {
         // Update high score if current score is better
@@ -68,29 +95,34 @@ function checkAns(idx) {
             highScore = level;
             localStorage.setItem('simonHighScore', highScore);
             updateHighScoreDisplay();
+            h2.innerHTML = `🎉 NEW HIGH SCORE! 🎉<br>Level ${level}<br>Press any key or click Start to play again`;
+        } else {
+            h2.innerHTML = `Game Over! You reached Level ${level}<br>Press any key or click Start to play again`;
         }
         
-        h2.innerHTML = `Game Over! Your score was <b>${level}</b><br> Press any key to start.`;
-        document.querySelector("body").style.backgroundColor = "red";
+        document.querySelector("body").style.backgroundColor = "#e74c3c";
         setTimeout(function() {
-            document.querySelector("body").style.backgroundColor = "white";
-        }, 150);
+            document.querySelector("body").style.background = "linear-gradient(135deg, #667eea 0%, #764ba2 100%)";
+        }, 300);
         reset();
     }
 }
 
 function btnPress() {
+    if (!started) return; // Don't allow clicks if game hasn't started
+    
     let btn = this;
     userFlash(btn);
     let userColor = btn.getAttribute("id");
     userseq.push(userColor);
-
+    
+    console.log("User sequence:", userseq);
     checkAns(userseq.length - 1);
 }
 
 function updateHighScoreDisplay() {
     if (h3) {
-        h3.innerText = `High Score: ${highScore}`;
+        h3.innerText = `High Score: Level ${highScore}`;
     }
 }
 
@@ -112,10 +144,10 @@ function playSound(color) {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     
     const frequencies = {
-        red: 440.00,    // A4 - Higher pitch for red
-        yellow: 349.23, // F4 - Medium-high pitch for yellow  
-        green: 293.66,  // D4 - Medium pitch for green
-        purple: 220.00  // A3 - Lower pitch for purple
+        blue1: 261.63,  // C4
+        blue2: 293.66,  // D4  
+        blue3: 329.63,  // E4
+        red: 440.00     // A4 - Higher pitch for the different block
     };
     
     const oscillator = audioContext.createOscillator();
@@ -128,26 +160,8 @@ function playSound(color) {
     oscillator.type = 'sine';
     
     gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.3);
+    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
     
     oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.3);
-}
-
-// Enhanced game flash with sound
-function gameFlash(btn) {
-    btn.classList.add("flash");
-    playSound(btn.id);
-    setTimeout(function() {
-        btn.classList.remove("flash");
-    }, 250);
-}
-
-// Enhanced user flash with sound
-function userFlash(btn) {
-    btn.classList.add("userflash");
-    playSound(btn.id);
-    setTimeout(function() {
-        btn.classList.remove("userflash");
-    }, 250);
+    oscillator.stop(audioContext.currentTime + 0.4);
 }
