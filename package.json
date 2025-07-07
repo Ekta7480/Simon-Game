@@ -1,14 +1,17 @@
 {
-  "name": "project",
+  "name": "simon-says-game",
   "version": "1.0.0",
-  "description": "A fun and interactive memory-based game inspired by the classic *Simon Says*!   Built using **HTML**, **CSS**, and **JavaScript**, this project tests the player's ability to recall sequences of flashing colors.",
-  "main": "app.js",
+  "description": "A fun and interactive memory-based game inspired by the classic Simon Says! Built using HTML, CSS, and JavaScript, this project tests the player's ability to recall sequences of flashing colors.",
+  "main": "index.html",
   "scripts": {
-    "dev": "http-server -p 3000 -o",
-    "start": "http-server -p 3000",
+    "dev": "npx http-server -p 3000 -o",
+    "start": "npx http-server -p 3000",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "keywords": [],
+  "keywords": ["game", "simon-says", "memory", "javascript", "html", "css"],
   "author": "",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "http-server": "^14.1.1"
+  }
 }

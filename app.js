@@ -140,36 +140,40 @@ function reset() {
 
 // Add sound effects
 function playSound(color) {
-    // Create audio context for sound effects
-    const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-    
-    const frequencies = {
-        blue1: 261.63,  // C4
-        blue2: 293.66,  // D4  
-        blue3: 329.63,  // E4
-        red: 440.00     // A4 - Higher pitch for the different block
-    };
-    
-    const frequencyValue = frequencies[color];
-    
-    // Check if frequency value is valid and finite
-    if (!frequencyValue || !Number.isFinite(frequencyValue)) {
-        console.warn(`Invalid frequency for color: ${color}`);
-        return;
+    try {
+        // Create audio context for sound effects
+        const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+        
+        const frequencies = {
+            blue1: 261.63,  // C4
+            blue2: 293.66,  // D4  
+            blue3: 329.63,  // E4
+            red: 440.00     // A4 - Higher pitch for the different block
+        };
+        
+        const frequencyValue = frequencies[color];
+        
+        // Check if frequency value is valid and finite
+        if (!frequencyValue || !Number.isFinite(frequencyValue)) {
+            console.warn(`Invalid frequency for color: ${color}`);
+            return;
+        }
+        
+        const oscillator = audioContext.createOscillator();
+        const gainNode = audioContext.createGain();
+        
+        oscillator.connect(gainNode);
+        gainNode.connect(audioContext.destination);
+        
+        oscillator.frequency.value = frequencyValue;
+        oscillator.type = 'sine';
+        
+        gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+        gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
+        
+        oscillator.start(audioContext.currentTime);
+        oscillator.stop(audioContext.currentTime + 0.4);
+    } catch (error) {
+        console.warn('Audio playback failed:', error);
     }
-    
-    const oscillator = audioContext.createOscillator();
-    const gainNode = audioContext.createGain();
-    
-    oscillator.connect(gainNode);
-    gainNode.connect(audioContext.destination);
-    
-    oscillator.frequency.value = frequencyValue;
-    oscillator.type = 'sine';
-    
-    gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-    gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.4);
-    
-    oscillator.start(audioContext.currentTime);
-    oscillator.stop(audioContext.currentTime + 0.4);
 }
