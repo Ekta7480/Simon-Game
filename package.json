@@ -1,0 +1,12 @@
+{
+  "name": "project",
+  "version": "1.0.0",
+  "description": "A fun and interactive memory-based game inspired by the classic *Simon Says*!   Built using **HTML**, **CSS**, and **JavaScript**, this project tests the player's ability to recall sequences of flashing colors.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC"
+}
