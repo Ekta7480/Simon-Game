@@ -153,7 +153,7 @@ function playSound(color) {
     const frequencyValue = frequencies[color];
     
     // Check if frequency value is valid and finite
-    if (!frequencyValue || !isFinite(frequencyValue)) {
+    if (!frequencyValue || !Number.isFinite(frequencyValue)) {
         console.warn(`Invalid frequency for color: ${color}`);
         return;
     }
