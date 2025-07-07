@@ -6,6 +6,7 @@ let level = 0;
 let highScore = localStorage.getItem('simonHighScore') || 0;
 
 let btns = ["red", "purple", "green", "yellow"];
+let differentBlock = "yellow"; // The block that's different from the others
 
 let h2 = document.querySelector("h2");
 let h3 = document.querySelector("h3");
