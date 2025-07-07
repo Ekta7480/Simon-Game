@@ -111,10 +111,10 @@ function playSound(color) {
     const audioContext = new (window.AudioContext || window.webkitAudioContext)();
     
     const frequencies = {
-        red: 329.63,    // E4
-        yellow: 261.63, // C4
-        green: 220.00,  // A3
-        purple: 174.61  // F3
+        red: 440.00,    // A4 - Higher pitch for red
+        yellow: 349.23, // F4 - Medium-high pitch for yellow  
+        green: 293.66,  // D4 - Medium pitch for green
+        purple: 220.00  // A3 - Lower pitch for purple
     };
     
     const oscillator = audioContext.createOscillator();

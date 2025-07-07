@@ -77,19 +77,19 @@ h3 {
 }
 
 .red {
-    background: linear-gradient(135deg, #ff6b6b, #ee5a52);
+    background: linear-gradient(135deg, #e74c3c, #c0392b);
 }
 
 .green {
-    background: linear-gradient(135deg, #4ecdc4, #44a08d);
+    background: linear-gradient(135deg, #27ae60, #229954);
 }
 
 .purple {
-    background: linear-gradient(135deg, #a8edea, #fed6e3);
+    background: linear-gradient(135deg, #8e44ad, #7d3c98);
 }
 
 .yellow {
-    background: linear-gradient(135deg, #ffeaa7, #fab1a0);
+    background: linear-gradient(135deg, #f1c40f, #f39c12);
 }
 
 .flash {
