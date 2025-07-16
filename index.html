@@ -1,50 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simon Says - Find the Different Color</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Document</title>
+    <link rel="stylesheet" href="style.css" />
 </head>
+
 <body>
-    <div class="game-container">
-        <h1>🎮 Simon Says - Color Pattern</h1>
-        <h2>Press any key or click Start to begin</h2>
-        <h3>High Score: Level 0</h3>
-
-        <button class="start-btn">🚀 Start Game</button>
-
-        <div class="btn-container">
-            <div class="line-one">  
-                <div class="btn blue1" type="button" id="blue1"></div>
-                <div class="btn red" type="button" id="red"></div>
-            </div>
-            <div class="line-two">
-                <div class="btn blue2" type="button" id="blue2"></div>
-                <div class="btn blue3" type="button" id="blue3"></div>
-            </div>
+    <h1>Simon Says Game </h1>
+    <h2>Press any key to start the game</h2>
+    <div class="btn-container">
+        <div class="line-one">
+            <div class="btn red" type="button" id="red">1</div>
+            <div class="btn yellow"  type="button" id="yellow">2</div>
+        </div>
+        <div class="line-two">
+            <div class="btn green"  type="button" id="green">3</div>
+            <div class="btn purple"  type="button" id="purple">4</div>
         </div>
 
-        <div class="instructions">
-            <h4>🕹️ How to Play:</h4>
-            <ul>
-                <li><strong>Pattern:</strong> 3 blocks are blue, 1 block is red</li>
-                <li><strong>Watch:</strong> The computer flashes a sequence</li>
-                <li><strong>Repeat:</strong> Click the blocks in the same order</li>
-                <li><strong>Level Up:</strong> Each level adds one more step</li>
-                <li><strong>Challenge:</strong> Remember longer sequences!</li>
-            </ul>
-            
-            <div class="game-flow">
-                <h4>🎯 Game Flow:</h4>
-                <p><strong>Level 1:</strong> red</p>
-                <p><strong>Level 2:</strong> red → blue</p>
-                <p><strong>Level 3:</strong> red → blue → blue</p>
-                <p><strong>And so on...</strong> The sequence gets longer!</p>
-            </div>
-        </div>
+
     </div>
-
     <script src="app.js"></script>
 </body>
+
 </html>
